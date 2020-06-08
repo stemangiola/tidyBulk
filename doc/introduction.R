@@ -85,11 +85,11 @@ tt.norm.MDS =  tt.norm %>% reduce_dimensions(.abundance = count_scaled, method="
 
 tt.norm.MDS %>% select(sample, contains("Dim"), `Cell type`, time ) %>% distinct()
 
-## ----plot_mds, cache=TRUE-----------------------------------------------------
-tt.norm.MDS %>%
-	select(contains("Dim"), sample, `Cell type`) %>%
-  distinct() %>%
-  GGally::ggpairs(columns = 1:3, ggplot2::aes(colour=`Cell type`))
+## ----plot_mds, cache=TRUE, eval=FALSE-----------------------------------------
+#  tt.norm.MDS %>%
+#  	select(contains("Dim"), sample, `Cell type`) %>%
+#    distinct() %>%
+#    GGally::ggpairs(columns = 1:3, ggplot2::aes(colour=`Cell type`))
 
 ## ----mds se, cache=TRUE-------------------------------------------------------
 se.norm.MDS =  se.norm %>% reduce_dimensions(.abundance = count_scaled, method="MDS", .dims = 3)
@@ -101,11 +101,11 @@ tt.norm.PCA = tt.norm %>% reduce_dimensions(.abundance = count_scaled, method="P
 
 tt.norm.PCA %>% select(sample, contains("PC"), `Cell type`, time ) %>% distinct()
 
-## ----plot_pca, cache=TRUE-----------------------------------------------------
-tt.norm.PCA %>%
-	select(contains("PC"), sample, `Cell type`) %>%
-  distinct() %>%
-  GGally::ggpairs(columns = 1:3, ggplot2::aes(colour=`Cell type`))
+## ----plot_pca, cache=TRUE, eval=FALSE-----------------------------------------
+#  tt.norm.PCA %>%
+#  	select(contains("PC"), sample, `Cell type`) %>%
+#    distinct() %>%
+#    GGally::ggpairs(columns = 1:3, ggplot2::aes(colour=`Cell type`))
 
 ## ----pca se, cache=TRUE-------------------------------------------------------
 se.norm.PCA = se.norm %>% reduce_dimensions(.abundance = count_scaled, method="PCA" ,  .dims = 3)
