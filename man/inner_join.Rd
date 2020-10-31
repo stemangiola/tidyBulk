@@ -3,9 +3,6 @@
 \name{inner_join}
 \alias{inner_join}
 \title{Inner join datasets}
-\usage{
-inner_join(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ...)
-}
 \arguments{
 \item{x}{tbls to join. (See dplyr)}
 

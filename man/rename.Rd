@@ -3,14 +3,7 @@
 \name{rename}
 \alias{rename}
 \title{Rename columns}
-\usage{
-rename(.data, ...)
-}
 \arguments{
-\item{.data}{A data frame, data frame extension (e.g. a tibble), or a
-lazy data frame (e.g. from dbplyr or dtplyr). See *Methods*, below, for
-more details.}
-
 \item{...}{<[`tidy-select`][dplyr_tidy_select]> Use `new_name = old_name`
 to rename selected variables.}
 }

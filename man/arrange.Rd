@@ -2,22 +2,7 @@
 % Please edit documentation in R/dplyr_methods.R
 \name{arrange}
 \alias{arrange}
-\alias{arrange.default}
-\alias{bind_rows}
-\alias{bind_cols}
-\alias{ungroup}
-\title{drplyr-methods}
-\usage{
-arrange(.data, ..., .by_group = FALSE)
-
-\method{arrange}{default}(.data, ..., .by_group = FALSE)
-
-bind_rows(..., .id = NULL)
-
-bind_cols(..., .id = NULL)
-
-ungroup(x, ...)
-}
+\title{Arrange rows by column values}
 \arguments{
 \item{.data}{A data frame, data frame extension (e.g. a tibble), or a
 lazy data frame (e.g. from dbplyr or dtplyr). See *Methods*, below, for
@@ -26,24 +11,9 @@ more details.}
 \item{...}{<[`tidy-eval`][dplyr_tidy_eval]> Variables, or functions or
 variables. Use [desc()] to sort a variable in descending order.}
 
-\item{.by_group}{If `TRUE`, will sort first by grouping variable. Applies to
-grouped data frames only.}
-
-\item{.id}{Data frame identifier.
-
-  When `.id` is supplied, a new column of identifiers is
-  created to link each row to its original data frame. The labels
-  are taken from the named arguments to `bind_rows()`. When a
-  list of data frames is supplied, the labels are taken from the
-  names of the list. If no names are found a numeric sequence is
-  used instead.}
-
-\item{x}{A [tbl()]}
+\item{.by_group}{If TRUE, will sort first by grouping variable. Applies to grouped data frames only.}
 }
 \value{
-A tibble
-Arrange rows by column values
-
 An object of the same type as `.data`.
 
 * All rows appear in the output, but (usually) in a different place.
@@ -82,6 +52,7 @@ The following methods are currently available in loaded packages:
 \examples{
 `\%>\%` = magrittr::`\%>\%`
 arrange(mtcars, cyl, disp)
+
 }
 \seealso{
 Other single table verbs: 

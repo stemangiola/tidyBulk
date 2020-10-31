@@ -3,9 +3,6 @@
 \name{left_join}
 \alias{left_join}
 \title{Left join datasets}
-\usage{
-left_join(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ...)
-}
 \arguments{
 \item{x}{tbls to join. (See dplyr)}
 

@@ -3,14 +3,7 @@
 \name{mutate}
 \alias{mutate}
 \title{Create, modify, and delete columns}
-\usage{
-mutate(.data, ...)
-}
 \arguments{
-\item{.data}{A data frame, data frame extension (e.g. a tibble), or a
-lazy data frame (e.g. from dbplyr or dtplyr). See *Methods*, below, for
-more details.}
-
 \item{...}{<[`tidy-eval`][dplyr_tidy_eval]> Name-value pairs.
   The name gives the name of the column in the output.
 

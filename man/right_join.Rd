@@ -3,9 +3,6 @@
 \name{right_join}
 \alias{right_join}
 \title{Right join datasets}
-\usage{
-right_join(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ...)
-}
 \arguments{
 \item{x}{tbls to join. (See dplyr)}
 

@@ -3,9 +3,6 @@
 \name{full_join}
 \alias{full_join}
 \title{Full join datasets}
-\usage{
-full_join(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ...)
-}
 \arguments{
 \item{x}{tbls to join. (See dplyr)}
 
