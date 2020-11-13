@@ -403,12 +403,12 @@ get_differential_transcript_abundance_bulk <- function(.data,
 
 		edgeR::DGEList(counts = .) %>%
 		edgeR::calcNormFactors(method = scaling_method) %>%
-		edgeR::estimateDisp(design) %>%
 
 		# select method
 		when(
-			tolower(method) ==  "edger_likelihood_ratio" ~ (.) %>% edgeR::glmFit(design),
-			tolower(method) ==  "edger_quasi_likelihood" ~ (.) %>% edgeR::glmQLFit(design)
+			tolower(method) ==  "edger_likelihood_ratio" ~ (.) %>% 	edgeR::estimateDisp(design) %>% edgeR::glmFit(design),
+			tolower(method) ==  "edger_quasi_likelihood" ~ (.) %>% 	edgeR::estimateDisp(design) %>% edgeR::glmQLFit(design),
+			tolower(method) == "edger_robust_likelihood_ratio" ~ (.) %>% edgeR::estimateGLMRobustDisp(design) %>% edgeR::glmFit(design)
 		)
 
 
@@ -423,7 +423,7 @@ get_differential_transcript_abundance_bulk <- function(.data,
 
 				# select method
 				when(
-					tolower(method) ==  "edger_likelihood_ratio" ~ (.) %>% edgeR::glmLRT(coef = 2, contrast = my_contrasts) ,
+					tolower(method) %in%  c("edger_likelihood_ratio", "edger_robust_likelihood_ratio") ~ (.) %>% edgeR::glmLRT(coef = 2, contrast = my_contrasts) ,
 					tolower(method) ==  "edger_quasi_likelihood" ~ (.) %>% edgeR::glmQLFTest(coef = 2, contrast = my_contrasts)
 				)	%>%
 
@@ -448,7 +448,7 @@ get_differential_transcript_abundance_bulk <- function(.data,
 
 							# select method
 							when(
-								tolower(method) ==  "edger_likelihood_ratio" ~ (.) %>% edgeR::glmLRT(coef = 2, contrast = my_contrasts[, .x]) ,
+								tolower(method) %in%  c("edger_likelihood_ratio", "edger_robust_likelihood_ratio") ~ (.) %>% edgeR::glmLRT(coef = 2, contrast = my_contrasts[, .x]) ,
 								tolower(method) ==  "edger_quasi_likelihood" ~ (.) %>% edgeR::glmQLFTest(coef = 2, contrast = my_contrasts[, .x])
 							)	%>%
 
@@ -2361,32 +2361,20 @@ get_cell_type_proportions = function(.data,
 				do.call(my_CIBERSORT, list(Y = ., X = reference) %>% c(dots_args)) %$%
 				proportions %>%
 				as_tibble(rownames = quo_name(.sample)) %>%
-				select(-`P-value`,-Correlation,-RMSE) %>%
-			        
-			    # Attach attributes
-		        reattach_internals(.data) %>%
-		        memorise_methods_used("cibersort")
+				select(-`P-value`,-Correlation,-RMSE) 
 			},
 			
 			# Don't need to execute do.call
 			method %>% tolower %>% equals("llsr") ~ (.) %>%
 				run_llsr(reference) %>%
-				as_tibble(rownames = quo_name(.sample)) %>%
-			        
-			    # Attach attributes
-		        reattach_internals(.data) %>%
-		        memorise_methods_used("llsr"),
+				as_tibble(rownames = quo_name(.sample)) ,
 
 			# Don't need to execute do.call
 			method %>% tolower %>% equals("epic") ~ {
 				
 				(.) %>%
 					run_epic(reference) %>%
-					as_tibble(rownames = quo_name(.sample)) %>%
-			        
-			        # Attach attributes
-		            reattach_internals(.data) %>%
-		            memorise_methods_used("epic")
+					as_tibble(rownames = quo_name(.sample)) 
 			},
 			
 			~ stop(
@@ -2398,7 +2386,13 @@ get_cell_type_proportions = function(.data,
 		setNames(c(
 			quo_name(.sample),
 			(.) %>% select(-1) %>% colnames() %>% sprintf("%s: %s", method, .)
-		))
+
+		)) %>%
+
+		# Attach attributes
+		reattach_internals(.data) %>%
+		memorise_methods_used(tolower(method))
+
 
 }
 
